@@ -6,7 +6,7 @@ import io.circe.syntax.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-/*
+/* Decode result:
 [
   "2023-02-09",
   "2023-02-09",
@@ -30,10 +30,11 @@ object ExecEx1 extends App {
     )
   )
 
-  println(e.asJson)
+  println(s"Before Decode:\n$e")
+  println(s"After Decode:\n${e.asJson}")
 }
 
-/*
+/* Decode result:
 {
   "events" : [
     "2023-02-09",
@@ -59,10 +60,41 @@ object ExecEx2 extends App {
     )
   )
 
-  println(e.asJson)
+  println(s"Before Decode:\n$e")
+  println(s"After Decode:\n${e.asJson}")
 }
 
-/*
+/* Decode result:
+{
+  "events" : [
+    "2023-02-09",
+    "2023-02-09",
+    "2023-02-09"
+  ]
+}
+ */
+final case class EventsEx5(events: List[LocalDate])
+object EventsEx5 {
+  given Decoder[EventsEx5] = Decoder.forProduct1("events")(EventsEx5.apply)
+  given Encoder[EventsEx5] = Encoder.forProduct1("events")(_.events)
+}
+object ExecEx5 extends App {
+
+  import EventsEx5.*
+
+  val e = EventsEx5(
+    List(
+      LocalDate.now(),
+      LocalDate.now(),
+      LocalDate.now()
+    )
+  )
+
+  println(s"Before Decode:\n$e")
+  println(s"After Decode:\n${e.asJson}")
+}
+
+/* Decode result:
 [
   "2023-02-09",
   "2023-02-09",
@@ -94,7 +126,8 @@ object ExecEx3 extends App {
     )
   )
 
-  println(e.asJson)
+  println(s"Before Decode:\n$e")
+  println(s"After Decode:\n${e.asJson}")
 }
 
 /**

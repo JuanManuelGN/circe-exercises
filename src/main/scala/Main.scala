@@ -31,7 +31,7 @@ object Main extends App {
     s"\nfromStringDecodedPerson\n$fromStringDecodedPerson"
   )
   // -------------------------------------------------
-  val someStringWrong: String =
+  val someStringWrong: String = // falta la , después de "Alice"
     """
       |{
       |  "name" : "Alice"
